@@ -1,2 +1,29 @@
 # pattern
 JavaScript设计模式与开发实践
+
+## chapter 1
+
+### 原型模式
+
+#### 所有数据都是对象
+  JavaScript中的根对象是Object.prototype对象 Object.prototype对象是一个空对象。我们在JavaScript遇到的每个对象实际上都是从Object.prototype对象克隆来的，Object.prototype对象就是他们的原型。
+  ```
+  var obj1 = {}
+  var obj2 = {}
+  console.log( Object.getPrototypeOf(obj1) === Object.prototype)
+  console.log( Object.getPrototypeOf(obj2) === Object.prototype)
+  ```
+- 要得到一个对象，不是通过实例化类，而是找到一个对象作为原型并克隆它。
+  已经重复过很多次JavaScript中没有类的概念(ps:es6前)，new 并不是实例化，而是一个函数构造器。JavaScript中函数不仅可以当作普通函数被调用，也可以作为构造器被调用。当使用new 运算来调用函数时，此时的函数就是一个构造器。用new运算来创建对象的过程，实际上也是先克隆Object.prototype对象，再进行一些额外的操作过程。
+  ```
+  var objectFactory = function() {
+  var obj = new Object() // 从Object.prototype上克隆一个空对象
+  Constructor = [].shift.call(arguments) // 取外部传入的构造器
+  obj.__proto__ = Constructor.prototype // 指向正确的原型
+  var ret = Constructor.apply(obj, arguments) //借用外部传入的构造器给obj设置属性
+  return typeof ret === 'object' ? ret : obj //保证返回对象
+  ```
+- 对象会记住他的原型。
+- 原型模式是通过克隆来创建对象的。
+- 原型链委托机制，当某个对象无法响应某个请求时，会把请求委托给自己的原型。
+
