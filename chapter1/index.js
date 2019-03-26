@@ -104,3 +104,28 @@ var objectFactory = function() {
   var ret = Constructor.apply(obj, arguments) //借用外部传入的构造器给obj设置属性
   return typeof ret === 'object' ? ret : obj //保证返回对象
 }
+
+// ES6的带来的class语法
+class Animal {
+  constructor(name) {
+    this.name = name
+  }
+
+  getName() {
+    return this.name
+  }
+}
+
+class Dog extends Animal {
+  constructor(name) {
+    super(name)
+  }
+
+  speak() {
+    return 'woof'
+  }
+}
+
+var dog = new Dog("Scamp")
+console.log(dog.getName() + ' says ' + dog.speak())
+
