@@ -63,3 +63,15 @@ class Dog extends Animal {
 var dog = new Dog("Scamp")
 console.log(dog.getName() + ' says ' + dog.speak())
 ```
+
+## chapter2 this call 和 apply
+
+### this的指向
+
+- 作为对象的方法调用
+- 作为普通函数调用
+- 构造器调用
+- Function.prototype.call 和 Function.prototype.apply调用
+
+#### 作为对象的方法调用 
+
