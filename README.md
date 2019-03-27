@@ -75,3 +75,4 @@ console.log(dog.getName() + ' says ' + dog.speak())
 
 #### 作为对象的方法调用 
 
+## chapter3 高阶函数
