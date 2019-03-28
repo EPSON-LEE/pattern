@@ -6,6 +6,14 @@ var func = function () {
   }
 }
 
+
+var func = function() {
+  var a = 1
+  return function() {
+    return a
+  }
+}
+
 var f = func()
 f()
 f()

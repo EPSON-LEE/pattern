@@ -75,4 +75,6 @@ console.log(dog.getName() + ' says ' + dog.speak())
 
 #### 作为对象的方法调用 
 
-## chapter3 高阶函数
+## chapter3 闭包和高阶函数
+
+闭包和JavaScript中的作用域是密不可分的
