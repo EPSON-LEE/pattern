@@ -129,4 +129,47 @@ val mul = function() {
 console.log(mult(1,2,3))
 console.log(mult(1,2,3))
 ```
+#### 延续局部变量的寿命
 
+```
+var report = function(src) {
+  var img = new Image()
+  img.src= src
+}
+report("url")
+
+```
+由于一些低版本的浏览器会出现bug,在这些浏览器下使用report函数进行数据上报会丢失30%左右的数据，也就是说report函数并不是每一次都成功的发起HTTP请求。丢失的原因是img是report函数中的局部变量，当report函数调用结束后，img局部变量就会被销毁，而此时或许还没来得及发出HTTP请求。
+
+```
+var report = (function() {
+  var imgs = []
+  return function(src) {
+    var img = new Image()
+    imgs.push(img)
+    img.src = src
+  }
+})()
+```
+
+### 使用闭包实现命令模式
+
+命令模式的意图是把请求分装成对象，从而分离请求的发起者和接受者（执行者）之间的耦合关系。在命令执行之前，可以预先往命令对象中植入命令的接收者。但在JavaScript中函数作为一等对象，本身就可以四处传递，用函数对象而不是普通对象来封装请求显得更加简单自然。如果需要往函数对象中预先植入命令的接受者，那么闭包可以来完成这个工作。在面向对象版本的命令模式中，预先植入的命令接收者被当作对象的属性保存起来；
+
+```
+var extend = function() {
+  var value = 0
+  return {
+    call: function() {
+      value++
+      console.log(value)
+    }
+  }
+}
+
+var extend = extend()
+extend.call() // 1
+extend.call() // 2
+extend.call() // 3
+
+```
