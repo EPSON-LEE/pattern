@@ -78,3 +78,20 @@ console.log(dog.getName() + ' says ' + dog.speak())
 ## chapter3 闭包和高阶函数
 
 闭包和JavaScript中的作用域是密不可分的
+
+### 闭包的生命周期
+  全局变量的生命周期是永久的，除非自己销毁这个全局变量，
+  当函数产生了闭包结构时，局部变量会一直存在与这个环境里，局部变量的生命周期看起来是被延续了。
+  ```
+  var func = function() {
+    var a = 0
+    return function() {
+      console.log(a++)
+    }
+  }
+
+  let temp = func()
+  temp() // 返回0
+  temp() // 返回1
+  temp() // 返回2
+  ```
