@@ -152,7 +152,7 @@ var report = (function() {
 })()
 ```
 
-### 使用闭包实现命令模式
+#### 闭包实现命令模式
 
 命令模式的意图是把请求分装成对象，从而分离请求的发起者和接受者（执行者）之间的耦合关系。在命令执行之前，可以预先往命令对象中植入命令的接收者。但在JavaScript中函数作为一等对象，本身就可以四处传递，用函数对象而不是普通对象来封装请求显得更加简单自然。如果需要往函数对象中预先植入命令的接受者，那么闭包可以来完成这个工作。在面向对象版本的命令模式中，预先植入的命令接收者被当作对象的属性保存起来；
 
@@ -172,4 +172,37 @@ extend.call() // 1
 extend.call() // 2
 extend.call() // 3
 
+```
+
+#### 闭包与内存管理
+
+使用闭包容易产生循环引用，如果闭包的作用域链中保存者一些DOM节点，这时候就容易造成内存泄露。
+
+### 高阶函数
+```
+var appendDiv = function() {
+  for(var i = 0; i < 100; i++) {
+    var div = document.createElement('div')
+    div.innerHTML = i
+    document.body.appendChild(div)
+    div.style.display = 'none'
+  }
+}
+```
+使用回调函数避免将 ELEMENT.style.display = 'none' 硬编码在代码里
+
+```
+var append = function(callback) {
+  for (var i = 0; i < 100; i++) {
+    var div = document.createElement('div')
+    div.innerHTML = i
+    document.body.appendChild(div)
+    if (typeof callback === 'function') {
+      callback(div)
+    }
+  }
+}
+appendDiv(function(node) {
+  node.style.display = 'none'
+})
 ```
