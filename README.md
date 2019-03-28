@@ -64,7 +64,7 @@ var dog = new Dog("Scamp")
 console.log(dog.getName() + ' says ' + dog.speak())
 ```
 
-## chapter2 this call 和 apply
+## chapter2  this call 和 apply
 
 ### this的指向
 
@@ -81,7 +81,7 @@ console.log(dog.getName() + ' says ' + dog.speak())
 
 ### 闭包的生命周期
   全局变量的生命周期是永久的，除非自己销毁这个全局变量，
-  当函数产生了闭包结构时，局部变量会一直存在与这个环境里，局部变量的生命周期看起来是被延续了。
+  当函数产生了闭包结构时，局部变量会一直存在与这个环境里，局部变量的生命周期看起来是被延续了。利用这个奇妙的特性我们可以做许多很有意思的事情。
   ```
   var func = function() {
     var a = 0
@@ -95,3 +95,38 @@ console.log(dog.getName() + ' says ' + dog.speak())
   temp() // 返回1
   temp() // 返回2
   ```
+### 闭包的更多作用
+
+#### 封装变量
+
+可以把一些不需要暴露在全局的变量封装为“私有变量”, 比如说计算数字的乘积：
+
+```
+var mul = function() {
+  var a = 1
+  debugger
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    a  = a * arguments[i]
+  }
+  return a
+}
+```
+加入缓存机制提高函数的性能
+```
+var cache = {}
+val mul = function() {
+  var args = [].prototype.join.call(arguments, ',')
+  if (cache[ args ]) {
+    return cache[args]
+  }
+
+  if (var i = 0; l = arguments.length; i < l; i++) {
+    a = a * arguments[i]
+  }
+
+  return cache[ args ] = a
+}
+console.log(mult(1,2,3))
+console.log(mult(1,2,3))
+```
+
