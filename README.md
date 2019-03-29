@@ -179,6 +179,8 @@ extend.call() // 3
 使用闭包容易产生循环引用，如果闭包的作用域链中保存者一些DOM节点，这时候就容易造成内存泄露。
 
 ### 高阶函数
+
+函数可以当作参数、返回值传递
 ```
 var appendDiv = function() {
   for(var i = 0; i < 100; i++) {
@@ -206,3 +208,5 @@ appendDiv(function(node) {
   node.style.display = 'none'
 })
 ```
+
+#### 高阶函数实现AOP
