@@ -273,7 +273,7 @@ var obj = {
 
 // 函数节流
 
-var throttle = function(f, interval) {
+var throttle = function(fn, interval) {
   var _self = fn,
     timer,
     firstTime = true
