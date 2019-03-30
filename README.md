@@ -209,5 +209,53 @@ appendDiv(function(node) {
 })
 ```
 
-
 #### 高阶函数实现AOP
+
+#### curry化
+
+#### uncurry化
+
+在JavaScript中，当我们调用对象的某个方法时，其实不用关心该对象原本是不是被设计拥有这个方法，这是动态类型语言的特点，也就是常说的鸭子类型思想。
+
+一个对象未必只能使用它自身的方法，我们可是使用call 和 apply完成这个需求
+
+```
+
+var obj1 = {
+  name: 'seven'
+}
+
+var obj2 = {
+  getName: function() {
+    return this.name
+  }
+}
+
+console.log(obj2.getName.call(obj1))
+```
+
+那么如何把泛化this的过程提取出来呢，JavaScript之父Brendan Eich在2011年发表的一篇twitter，下面是uncurrying实现方法之一
+
+
+
+```
+// uncurry 的一种实现方法
+Function.prototype.uncurrying = function() {
+  var self = this // self 等价于 Array.prototype.push
+  return function() {
+    var obj = Array.prototype.shift.call(arguments)
+    return self.apply(obj, arguments)
+  }
+}
+
+// uncurry的另一种实现方法
+Function.prototype.uncurrying = function() {
+  var self = this
+  return function() {
+    return Function.prototype.call.apply(self, arguments)
+  }
+}
+```
+
+##### 函数节流
+

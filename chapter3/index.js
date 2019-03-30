@@ -226,3 +226,78 @@ var cost = (function() {
     }
   }
 })()
+
+cost(100)
+cost(200)
+cost()
+
+// uncurry
+
+// uncurry 的一种实现方法
+Function.prototype.uncurrying = function() {
+  var self = this // self 等价于 Array.prototype.push
+  return function() {
+    var obj = Array.prototype.shift.call(arguments)
+    return self.apply(obj, arguments)
+  }
+}
+
+// uncurry的另一种实现方法
+Function.prototype.uncurrying = function() {
+  var self = this
+  return function() {
+    return Function.prototype.call.apply(self, arguments)
+  }
+}
+
+// 通过uncurrying的方法把这句代码转换为一个通用的push函数
+var push = Array.prototype.push.uncurrying()
+
+(function() {
+  push(arguments, 4)
+  console.log(arguments)
+})(1,2,3,4)
+
+// 我们把这个方法范围扩大一些
+
+for (var i = 0, fn, ary = ['push', 'shift', 'forEach']; fn = ary[i++];) {
+  Array[fn] = Array.prototype[ fn ].uncurrying()
+}
+
+var obj = {
+  "length": 3,
+  "0": 1,
+  "1": 2,
+  "3": 3
+}
+
+// 函数节流
+
+var throttle = function(f, interval) {
+  var _self = fn,
+    timer,
+    firstTime = true
+  return function() {
+    var args = arguments,
+      _me = this
+
+      if (firstTime) {
+        _self.apply(_me, args)
+        return firstTime = false
+      }
+
+      if (timer) {
+        return false
+      }
+
+      timer = setInterval(function() {
+        clearInterval(timer)
+        timer = null
+        _self.apply(_me, this)
+      }, interval || 500)
+  }
+}
+
+window.onresize = throttle(function() {
+  console.log(1)
+}, 500)
