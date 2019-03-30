@@ -209,4 +209,5 @@ appendDiv(function(node) {
 })
 ```
 
+
 #### 高阶函数实现AOP

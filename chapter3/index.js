@@ -195,3 +195,34 @@ window.onresize = throttle(function() {
  var timerChunk = function() {  }
 
 // 惰性加载函数
+
+// 
+var getSingle = function(fn) {
+  var ret
+  return function() {
+    return ret || fn.apply(this, arguments)
+  }
+}
+
+var a = function(value) {
+  console.log(value)
+}
+
+var b = getSingle(a)
+b(13)
+
+// 
+var cost = (function() {
+  var args  = []
+  return function() {
+    if (arguments.length === 0) {
+      var money = 0
+      for (var i = 0, len = arguments.length; i < len; i++) {
+        money += args[i]
+      }
+      return money
+    } else {
+      [].apply.apply(args, arguments)
+    }
+  }
+})()
