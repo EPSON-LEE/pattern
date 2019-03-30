@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <button id="button" type="button" "> click me</button>
+</body>
+
+<script>
+  function log() {
+    console.log(this.id)
+  }
+  var throttle = function(fn, interval) {
+  var _self = fn,
+    timer,
+    firstTime = true
+  return function() {
+    debugger
+    var args = arguments,
+      _me = this
+
+      if (firstTime) {
+        _self.apply(_me, args)
+        return firstTime = false
+      }
+
+      if (timer) {
+        return false
+      }
+
+      timer = setTimeout(function() {
+        clearTimeout(timer)
+        timer = null
+        _self.apply(_me, this)
+      }, interval || 500)
+  }
+}
+window.onresize = throttle(clickEvent, 1000)
+
+// document.getElementById('button').onclick = throttle(clickEvent, 1000)
+// document.getElementById('button').onclick = function() {
+//   console.log(this.id)
+// }
+
+function clickEvent() {
+  console.log(1111)
+}
+
+
+// throttle(handleClick, 1000)
+</script>
+</html>

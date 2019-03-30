@@ -278,6 +278,7 @@ var throttle = function(fn, interval) {
     timer,
     firstTime = true
   return function() {
+    debugger
     var args = arguments,
       _me = this
 

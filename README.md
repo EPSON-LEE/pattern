@@ -259,3 +259,37 @@ Function.prototype.uncurrying = function() {
 
 ##### 函数节流
 
+```
+var throttle = function(fn, interval) {
+  var _self = fn,
+    timer,
+    firstTime = true
+  return function() {
+    debugger
+    var args = arguments,
+      _me = this
+
+      if (firstTime) {
+        _self.apply(_me, args)
+        return firstTime = false
+      }
+
+      if (timer) {
+        return false
+      }
+
+      timer = setInterval(function() {
+        clearInterval(timer)
+        timer = null
+        _self.apply(_me, this)
+      }, interval || 500)
+  }
+}
+```
+
+## chapter 4 单例模式
+
+单例模式的定义是：保证一个类仅有一个实例，并且提供一个访问它的全局访问点。
+
+
+
