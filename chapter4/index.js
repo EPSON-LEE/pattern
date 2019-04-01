@@ -17,3 +17,46 @@ singlePattern.getInstance = function(name) {
   }
   return this.instance
 }
+
+var a = singlePattern.getInstance('seven1')
+var b = singlePattern.getInstance('seven2')
+
+console.log(a === b)
+
+// 透明的单例模式
+
+var CreateDiv = (function() {
+  var instance
+
+  var CreateDiv = function(html) {
+    if (instance) {
+      return instance
+    }
+    this.html = html
+    this.init()
+    return instance = this
+  }
+
+  CreateDiv.prototype.init = function() {
+    var div = document.createElement('div')
+    div.innerHTML = this.html
+    document.body.appendChild(div)
+  }
+
+  return CreateDiv
+})()
+
+var a = new CreateDiv('sven1')
+var b = new CreateDiv('sven2')
+console.log(a === b)
+
+// 命名空间
+
+var namespace = {
+  a: function() {
+    alert(1)
+  },
+  b: function(params) {
+    alert(2)
+  }
+}
