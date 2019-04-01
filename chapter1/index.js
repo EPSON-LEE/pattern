@@ -129,3 +129,11 @@ class Dog extends Animal {
 var dog = new Dog("Scamp")
 console.log(dog.getName() + ' says ' + dog.speak())
 
+// objfactory
+
+function objectFactory() {
+  var obj = new Object()
+  var constructor = [].shift.call(arguments)
+  obj.__proto__ = constructor.prototype
+  var ret = constructor.apply(obj, arguments)
+}
