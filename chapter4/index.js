@@ -60,3 +60,23 @@ var namespace = {
     alert(2)
   }
 }
+
+// 创建一个命名空间
+
+var MyApp = {}
+MyApp.namespace = function(name) {
+  debugger
+  var parts = name.splits('.')
+  var current = MyApp
+  for (var i in parts) {
+    if (!current[parts[i]]) {
+      current[parts[i]] = {}
+    }
+    current = current[parts[i]]
+  }
+}
+
+MyApp.namespace('event')
+MyApp.namespace('dom.style')
+
+console.log(MyApp)

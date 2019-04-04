@@ -295,6 +295,7 @@ var throttle = function(fn, interval) {
 
 ### 使用命名空间
 
+## chapter 4 策略模式
 
 
 
