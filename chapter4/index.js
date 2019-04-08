@@ -65,7 +65,6 @@ var namespace = {
 
 var MyApp = {}
 MyApp.namespace = function(name) {
-  debugger
   var parts = name.splits('.')
   var current = MyApp
   for (var i in parts) {

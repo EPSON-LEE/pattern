@@ -104,7 +104,6 @@ console.log(dog.getName() + ' says ' + dog.speak())
 ```
 var mul = function() {
   var a = 1
-  debugger
   for (var i = 0, l = arguments.length; i < l; i++) {
     a  = a * arguments[i]
   }
@@ -265,7 +264,6 @@ var throttle = function(fn, interval) {
     timer,
     firstTime = true
   return function() {
-    debugger
     var args = arguments,
       _me = this
 
