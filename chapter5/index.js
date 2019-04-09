@@ -135,3 +135,83 @@ var validataFunc = function() {
   return errorMsg
 }
 
+var registerForm = document.getElementById('registerForm')
+registerForm.onsubmit = function() {
+  var errorMsg = validataFunc()
+  if (errorMsg) {
+    console.log(errorMsg)
+    return false //组织表单提交
+  }
+}
+
+// 最后是Validator类的实现
+ var Validator = function() {
+   this.cache = [] // 保存校验规则
+ }
+
+ Validator.prototype.add = function(dom, rule, errorMsg) {
+   var ary = rule.split(':') // 把strategy
+   this.cache.push(function() { // 把校验的步骤用空函数包起来，并且放入cache
+     var strategy = ary.shift() // 用户挑选的strategy
+     ary.unshift(dom.value)     //
+     ary.push(errorMsg)
+     return strategies[ strategy ].apply(dom, ary)
+   })
+ }
+
+ Validator.prototype.start = function() {
+   for (var i = 0, validataFunc; validataFunc = this.cache[i++];) {
+     var msg = validataFunc() // 开始校验，并取得校验后的返回信息
+     if (msg) {
+       return msg
+     }
+   }
+ }
+
+// 如果我们想对一个输入框添加多种校验规则，例如期盼以如下的形式进行校验
+
+validator.add(registerForm.userName [{
+  strategy: 'isNonEmpty',
+  errorMsg: '用户名不能为空'
+}, {
+  strategy: 'minLength:6',
+  errorMsg: '用户名长度不能小于10位'
+}])
+
+// 这时我们应该如何编写 Validator类
+
+var validator = function() {
+  this.cache = []
+}
+
+Validator.prototype.add = function(dom, rules) {
+  var self = this
+  for (var i = 0, rule; rule = rules[i++];) {
+    // 将规则拆开
+    (function(rule) {
+      var strategyAry = rule.strategy.split(':')
+      var errorMsg = rule.errorMsg
+
+      self.cache.push((function() {
+        var strategy = strategyAry.shift()
+
+        strategyAry.unshift(dom.value)
+        strategyAry.push(errorMsg)
+        return strategies[strategy].apply(dom, strategy)
+      }))
+    })(rule)
+  }
+}
+
+Validator.prototype.start = function() {
+  for (var i = 0, validataFunc; validataFunc = this.cache[i++];) {
+    var errorMsg = validataFunc()
+    if (errorMsg) {
+      return errorMsg
+    }
+  }
+}
+
+// 策略模式优缺点
+
+// 一等函数对象与策略模式
