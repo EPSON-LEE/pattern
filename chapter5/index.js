@@ -83,3 +83,55 @@ Animate.prototype.step = function() {
 Animate.prototype.update = function(pos) {
   this.dom.style[this.propertyName] = pos + 'px'
 }
+
+// 表单校验
+
+// 最基本的初级版本
+var registerForm = document.getElementById('registerForm')
+
+registerForm.onsubmit = function() {
+  if (registerForm.userName.value === '') {
+    alert('用户不能为空')
+    return false
+  }
+
+  if (registerForm.password.value.length < 6) {
+    alert('密码长度不能小于6位')
+    return false
+  }
+
+  if (!/(^1[3|5|8][0-9]{9}$)/.test(registerForm.phoneNumber.value)) {
+    alert('手机号码格式不正确')
+    return false
+  }
+}
+
+// 使用策略模式重构表单校验
+
+// 首先把策略逻辑分装为策略对象
+var strategies = {
+  isNonEmpty: function(value, errorMsg) {
+    if (value === '') {
+      return errorMsg
+    }
+  },
+  minLength: function(value, length, errorMsg) {
+    if (value.length < length) {
+      return errorMsg
+    }
+  }
+}
+
+// 实现Validator类， 在这里validator作为Context，负责接收用户的请求并委托给strategy
+
+var validataFunc = function() {
+  var validator = new Validator()
+  // 添加一些校验规则
+  validator.add(registerForm.userName, 'isNoEmpty', '同户名不能为空')
+  validator.add(registerForm.password, 'minLength:6', '密码长度不能小于6位')
+  validator.add(registerForm.userName, 'isMobile', '手机号码格式不正确')
+
+  var errorMsg = validator.start()
+  return errorMsg
+}
+
