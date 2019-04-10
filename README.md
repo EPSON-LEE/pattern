@@ -378,3 +378,6 @@ Animate.prototype.update = function(pos) {
 }
 ```
 
+## chapter 6 代理模式
+
+## chapter 7 迭代模式
