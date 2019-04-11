@@ -381,3 +381,26 @@ Animate.prototype.update = function(pos) {
 ## chapter 6 代理模式
 
 ## chapter 7 迭代模式
+
+## chapter 8 发布-订阅模式
+
+## chapter 9 命令模式
+
+## chapter 10 组合模式
+
+## chapter 11 模版方法模式
+
+## chapter 12 享元模式
+
+## chapter 13 责任链模式
+
+## chapter 14 中介者模式
+
+## chapter 15 装饰者模式
+
+## chapter 16 状态模式
+
+
+
+
+
