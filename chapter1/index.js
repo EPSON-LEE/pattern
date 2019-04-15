@@ -129,11 +129,17 @@ class Dog extends Animal {
 var dog = new Dog("Scamp")
 console.log(dog.getName() + ' says ' + dog.speak())
 
-// objfactory
+// objfactory how to implement a new 
 
 function objectFactory() {
   var obj = new Object()
   var constructor = [].shift.call(arguments)
-  obj.__proto__ = constructor.prototype
+  constructor.prototype = obj.__proto__
   var ret = constructor.apply(obj, arguments)
+  return ret
 }
+
+function log(value) {
+  console.log('success:' + value)
+}
+var test = objectFactory(log, 111)

@@ -377,6 +377,7 @@ Animate.prototype.update = function(pos) {
   this.dom.style[this.propertyName] = pos + 'px'
 }
 ```
+# PAUSE
 
 ## chapter 6 代理模式
 
