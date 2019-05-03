@@ -105,6 +105,13 @@ var objectFactory = function() {
   return typeof ret === 'object' ? ret : obj //保证返回对象
 }
 
+function test() { 
+  console.log(1)
+}
+
+var a = new test()
+
+
 // ES6的带来的class语法
 class Animal {
   constructor(name) {
